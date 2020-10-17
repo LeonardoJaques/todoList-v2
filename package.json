@@ -3,9 +3,9 @@
   "version": "2.0.0",
   "description": "Todo List",
   "main": "app.js",
-  "scripts": {
-    "dev": "nodemon app.js"
-  },
+ "scripts": {
+  "start": "node server.js"
+},
   "author": "Leonardo Jaques",
   "engines": {
       "node": "10.x"
