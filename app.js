@@ -38,7 +38,7 @@ const List = mongoose.model("List", listSchema);
 
 
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
 
   Item.find({}, (err, foundItems) => {
 
@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
           console.log("Successfully saved default items to DB");
         }
       });
-      res.redirect('/');
+      res.redirect("/");
     } else {
 
       res.render("list", {
@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
 
 });
 
-app.get('/:customListname', (req, res) => {
+app.get("/:customListname", (req, res) => {
   const customListname = _.capitalize(req.params.customListname);
 
   List.findOne({
@@ -76,7 +76,7 @@ app.get('/:customListname', (req, res) => {
           items: defaultItems
         });
         list.save();
-        res.redirect('/' + customListname);
+        res.redirect("/" + customListname);
       } else {
         // Show an existing list
         res.render("list", {
@@ -88,7 +88,7 @@ app.get('/:customListname', (req, res) => {
   });
 });
 
-app.post('/', (req, res) => {
+app.post("/", (req, res) => {
   const itemName = req.body.newItem;
   const listName = req.body.list;
   const item = new Item({
@@ -96,19 +96,19 @@ app.post('/', (req, res) => {
   });
   if (listName === "Today") {
     item.save();
-    res.redirect('/')
+    res.redirect("/")
   } else {
     List.findOne({
       name: listName
     }, (err, foundList) => {
       foundList.items.push(item);
       foundList.save()
-      res.redirect('/' + listName);
+      res.redirect("/" + listName);
     })
   }
 });
 
-app.post('/delete', (req, res) => {
+app.post("/delete", (req, res) => {
   const checkedItemId = req.body.checkbox;
   const listName = req.body.listName;
 
@@ -116,7 +116,7 @@ app.post('/delete', (req, res) => {
     Item.findOneAndDelete(checkedItemId, function (err) {
       if (!err) {
         console.log(`Successfully deleted item id: ${checkedItemId}`);
-        res.redirect('/')
+        res.redirect("/")
       }
     });
   } else {
@@ -130,14 +130,14 @@ app.post('/delete', (req, res) => {
       }
     }, (err) => {
       if (!err) {
-        res.redirect('/' + listName);
+        res.redirect("/" + listName);
       }
     });
   }
 
 });
 
-app.get('/about', (req, res) => {
+app.get("/about", (req, res) => {
   res.render("about")
 })
 
